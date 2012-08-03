@@ -1,1 +1,45 @@
 <h1><%= @list.name %><h1>
+
+<div class="row">	
+	<table>
+		<tr>
+			<td>Name</td>
+			<td></td>
+			<td>Details</td>
+			<td>Done?</td>
+			<td>Edit</td>
+		</tr>
+		<% @list.tasks.each do |task| %>
+			<tr>
+				<td><%= task.name %></td>
+				<td>--></td>
+				<td><%= task.details %></td>
+				<td>
+					<% if task.completed == true %>
+						Done
+					<% end %>
+				</td>
+				<td><%= link_to "Edit", edit_task_path(task.id)%></td>
+				<td><%= link_to "Delete", task_path(task.id), method: :delete, confirm: "Are you sure you want to delete?" %></td>
+			</tr>
+		<% end %>
+	</table>
+</div>
+
+<br />
+
+<h1>Create a new Task:</h1>
+
+<%= form_for(@task) do |f| %>
+
+	<%= f.hidden_field :list_id %>
+	
+	<%= f.label :name %>
+	<%= f.text_field :name %>
+	
+	<%= f.label :details %>
+	<%= f.text_field :details %>
+	
+	<%= f.submit "Add New Task" %>
+	
+<% end %>
